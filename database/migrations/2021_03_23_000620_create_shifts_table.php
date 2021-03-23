@@ -15,6 +15,10 @@ class CreateShiftsTable extends Migration
     {
         Schema::create('shifts', function (Blueprint $table) {
             $table->uuid('id')->unique();
+            $table->uuid('branch_id');
+            $table->foreign('branch_id')
+                ->references('id')
+                ->on('branches');
             $table->timestamps('start');
             $table->timestamps('end');
             $table->integer('status');
