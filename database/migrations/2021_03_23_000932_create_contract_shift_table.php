@@ -22,7 +22,7 @@ class CreateContractShiftTable extends Migration
             $table->uuid('shift_id');
             $table->foreign('shift_id')
                 ->references('id')
-                ->on('roles');
+                ->on('shifts');
             $table->integer('status');
             $table->timestamps();
         });
