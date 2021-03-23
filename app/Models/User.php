@@ -36,4 +36,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->id = (string) Uuid::generate(4);
+        });
+    }
 }
