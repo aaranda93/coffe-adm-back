@@ -14,5 +14,29 @@ class ProductController extends Controller
      * @param  int  $id
      * @return Response
      */
+    public function index(Request $request)
+    {
+       
 
+    }
+    public function show($product_id)
+    {
+       
+        
+    }
+    public function store(Request $request, $product_id)
+    {
+       
+        
+    }
+    public function update(Request $request, $product_id)
+    {
+       
+        
+    }
+    public function destroy($product_id)
+    {
+       
+        
+    }
 }
