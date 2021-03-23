@@ -112,4 +112,8 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+
+$app->configure('tinker');
+$app->register(\Laravel\Tinker\TinkerServiceProvider::class);
+
 return $app;
