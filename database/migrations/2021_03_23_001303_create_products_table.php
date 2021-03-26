@@ -15,10 +15,10 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->uuid('entity_id');
-            $table->foreign('entity_id')
+            $table->uuid('company_id');
+            $table->foreign('company_id')
                 ->references('id')
-                ->on('entities');
+                ->on('companies');
             $table->string('name');
             $table->string('url_pic');
             $table->string('url_pic_min');

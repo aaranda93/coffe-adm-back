@@ -18,7 +18,7 @@ class CreateBillsTable extends Migration
             $table->uuid('table_id');
             $table->foreign('table_id')
                 ->references('id')
-                ->on('table');
+                ->on('tables');
             $table->uuid('contract_shift_id');
             $table->foreign('contract_shift_id')
                 ->references('id')
