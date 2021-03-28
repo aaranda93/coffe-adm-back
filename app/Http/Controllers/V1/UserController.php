@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\V1;
-use App\Http\Requests\StoreUser;
+use App\Http\Requests\Users\StoreUser;
+use App\Http\Requests\Users\StoreUpdate;
 use Illuminate\Http\Request;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
@@ -22,7 +23,7 @@ class UserController extends Controller
 
         return $this->response(Api::OK, $users);
     }
-    
+
     public function show($user_id)
     {
         $users = User::find($user_id)
@@ -38,7 +39,7 @@ class UserController extends Controller
         return $this->response(Api::CREATED, $newUser);
     }
 
-    public function update(Request $request, $user_id)
+    public function update(StoreUpdate $request, $user_id)
     {
         $user = User::find($user_id);
         $user->update($request->all());

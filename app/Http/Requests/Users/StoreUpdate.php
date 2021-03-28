@@ -10,7 +10,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Http\Controllers\Controller as Controller;
 
 
-class StoreUser extends FormRequest
+class StoreUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,13 +32,11 @@ class StoreUser extends FormRequest
   
         return [
             
-            'email' => 'required|email|max:60',
-            'phone' => 'required|max:60',
-            'birthday' => 'required|date',
-            'nid' => 'required|unique:users|cl_rut',
-            'forenames' => 'required',
-            'surnames' => 'required',
-            'password' => 'required|min:8'
+            'email' => 'email|max:60',
+            'phone' => 'max:60',
+            'birthday' => 'date',
+            'nid' => 'unique:users|cl_rut',
+            'password' => 'min:8'
            
         ];
     }
@@ -49,7 +47,7 @@ class StoreUser extends FormRequest
             
             'nid.cl_rut' => 'El rut debe ser válido',
             'nid.unique' => 'El rut ya está registrado',
-            'required' => 'El campo es requerido',
+            'birthday.date' => 'La fecha de nacimiento debe ser una fecha valida',
             'password.min' => 'La contraseña debe contener por lo menos 8 caracteres',
             'email.max' => 'El campo tiene un largo máximo de 60 caracteres',
             'email'      => 'El correo debe ser un correo válido',
