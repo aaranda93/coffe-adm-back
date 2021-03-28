@@ -13,6 +13,8 @@ use Laravel\Lumen\Auth\Authorizable;
 
 use App\Models\Branches;
 use App\Models\Contract;
+use App\Models\Company;
+use App\Models\ContractRole;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -47,7 +49,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $casts = [
         'id' => 'string'
     ];
-    
+
     protected $keyType = 'string';
 
     public static function boot()
@@ -90,6 +92,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $query;
     }
 
+
     public function branch(){
 
         return $this->hasOneThrough(
@@ -122,9 +125,37 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
                'branch_id',
                'company_id'
              ]
-        );
+        )
+        ->where('contracts.status', Contract::ACTIVE)
+        ->where('branches.status', Branch::ACTIVE)
+        ->where('companies.status', Company::ACTIVE);
 
     }
+
+    public function roles(){
+
+        return $this->hasManyDeep(
+            'App\Models\Role', [
+                'App\Models\Contract', 
+                'App\Models\ContractRole'
+            ],
+            [
+                'user_id', 
+                'contract_id', 
+                'id'
+             ],
+             [
+               'id',
+               'id',
+               'role_id'
+             ]
+        )
+        ->where('contract_role.status', ContractRole::ACTIVE)
+        ->where('contracts.status', Contract::ACTIVE);
+
+    }
+
+
 
     public function belongsToCompany($company_id){
 
@@ -156,5 +187,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         }
 
     }
+
+    public function hasEitherRole(array $roleTypes){
+
+        return (bool)$this->roles()
+            ->whereIn('roles.name', $roleTypes)
+            ->first();
+    }
+
+
 
 }
