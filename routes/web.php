@@ -16,10 +16,14 @@
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
-    $router->post('branches/{branch_id}/contracts',  
-        [
-            'uses' => 'ContractController@create'
-        ]
-    );
+    //user routes
+
+    $router->post('users', ['uses' => 'UserController@create'] );
+    $router->get('users', ['uses' => 'UserController@index'] );
+    $router->put('users/{user_id}', ['uses' => 'UserController@update'] );
+
+
+    //contract routes
+    $router->post('branches/{branch_id}/contracts', ['uses' => 'ContractController@create']);
 
   });
