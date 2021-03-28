@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\V1;
-
+use App\Http\Requests\StoreUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modelsl\User;
@@ -14,9 +14,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function index(Request $request)
+    public function index(StoreUser $request)
     {
-       
+
+            $newUser = User::Create($request->all());
 
     }
     public function show($user_id)
