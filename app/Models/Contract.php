@@ -30,6 +30,8 @@ class Contract extends Model
     protected $casts = [
         'id' => 'string'
     ];
+
+    protected $keyType = 'string';
     
     public static function boot()
     {

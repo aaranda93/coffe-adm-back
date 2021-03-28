@@ -36,6 +36,8 @@ class Company extends Model
         'id' => 'string'
     ];
     
+    protected $keyType = 'string';
+
     public static function boot()
     {
         parent::boot();

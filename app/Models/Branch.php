@@ -36,7 +36,8 @@ class Branch extends Model
     protected $casts = [
         'id' => 'string'
     ];
-
+    protected $keyType = 'string';
+    
     public function users(){
 
         return $this->belongsToOne('App\User','App\Contract');

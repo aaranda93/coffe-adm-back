@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Webpatser\Uuid\Uuid;
+
 class Role extends Model
 {
-    use HasFactory;
     
     /**
      * The attributes that are mass assignable.
@@ -30,6 +29,8 @@ class Role extends Model
     protected $casts = [
         'id' => 'string'
     ];
+
+    protected $keyType = 'string';
     
     public static function boot()
     {

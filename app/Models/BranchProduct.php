@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 
 class BranchProduct extends Model
@@ -32,6 +33,8 @@ class BranchProduct extends Model
     protected $casts = [
         'id' => 'string'
     ];
+
+    protected $keyType = 'string';
     
     public static function boot()
     {

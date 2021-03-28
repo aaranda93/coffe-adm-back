@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Webpatser\Uuid\Uuid;
 
 class Table extends Model
 {
@@ -29,6 +30,8 @@ class Table extends Model
     protected $casts = [
         'id' => 'string'
     ];
+
+    protected $keyType = 'string';
     
     public static function boot()
     {
