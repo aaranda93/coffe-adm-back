@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Models;
-
+use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
+
+    const INACTIVE = 0;
+    const ACTIVE = 1;
     
     /**
      * The attributes that are mass assignable.
@@ -28,9 +31,17 @@ class Branch extends Model
      * @var array
      */
 
-    protected $table = [
-        'branches',
-    ];    
+    protected $table = 'branches';    
+
+    protected $casts = [
+        'id' => 'string'
+    ];
+
+    public function users(){
+
+        return $this->belongsToOne('App\User','App\Contract');
+
+    }
     
     public static function boot()
     {

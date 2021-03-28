@@ -24,9 +24,11 @@ class ContractRole extends Model
      * @var array
      */
 
-    protected $table = [
-        'contract_role',
-    ];    
+    protected $table = 'contract_role';    
+
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {

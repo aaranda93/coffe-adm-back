@@ -25,9 +25,11 @@ class Shift extends Model
      * @var array
      */
 
-    protected $table = [
-        'shifts',
-    ];    
+    protected $table = 'shifts';   
+    
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {

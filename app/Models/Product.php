@@ -26,9 +26,11 @@ class Product extends Model
      * @var array
      */
 
-    protected $table = [
-        'products',
-    ];    
+    protected $table = 'products';
+    
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {

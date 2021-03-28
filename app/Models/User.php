@@ -6,13 +6,20 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Webpatser\Uuid\Uuid;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
+use App\Models\Branches;
+use App\Models\Contract;
+
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable, HasFactory;
+    use Authenticatable, Authorizable, HasFactory, HasRelationships;
 
+    const INACTIVE = 0;
+    const ACTIVE = 1;
     /**
      * The attributes that are mass assignable.
      *
@@ -36,6 +43,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    protected $casts = [
+        'id' => 'string'
+    ];
+
 
     public static function boot()
     {
@@ -77,9 +89,62 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $query;
     }
 
-/*     public function branch(){
+    public function branch(){
 
-        return $this->belongsToMany('App\Branch','contracts');
+        return $this->hasOneThrough(
+            'App\Models\Branch',
+            'App\Models\Contract',
+            'user_id',
+            'id',
+            'id', 
+            'branch_id'
+        )
+        ->where('contracts.status', Contract::ACTIVE)
+        ->where('branches.status', Branch::ACTIVE);
 
-    } */
+    }
+
+    public function company(){
+
+        return $this->hasOneDeep(
+            'App\Models\Company', [
+                'App\Models\Contract', 
+                'App\Models\Branch'
+            ],
+            [
+                'user_id', 
+                'id', 
+                'id'
+             ],
+             [
+               'id',
+               'branch_id',
+               'company_id'
+             ]
+        );
+
+    }
+
+    public function belongsToCompany($company_id){
+
+        try {
+
+            return $this->company()
+            ->where('companies.id',$company_id)
+            ->firstOrFail();
+
+        } catch (\Exception $th) {
+            
+            return null;
+
+        }
+
+    }
+
+    public function belongsToBranch($branch_id){
+
+        return $this->company()
+        ->where('branches.id',$branch_id);
+    }
+
 }

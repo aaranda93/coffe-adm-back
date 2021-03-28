@@ -24,9 +24,11 @@ class ContractShift extends Model
      * @var array
      */
 
-    protected $table = [
-        'contract_shift',
-    ];    
+    protected $table = 'contract_shift';    
+
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {

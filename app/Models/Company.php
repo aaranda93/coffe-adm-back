@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Models;
-
+use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
+    const INACTIVE = 0;
+    const ACTIVE = 1;
     
     /**
      * The attributes that are mass assignable.
@@ -28,9 +30,11 @@ class Company extends Model
      * @var array
      */
 
-    protected $table = [
-        'companies',
-    ];    
+    protected $table = 'companies';   
+
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {
@@ -39,4 +43,6 @@ class Company extends Model
             $model->id = (string) Uuid::generate(4);
         });
     }
+
+    
 }

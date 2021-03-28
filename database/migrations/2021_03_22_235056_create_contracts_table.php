@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\Contract;
 class CreateContractsTable extends Migration
 {
     /**
@@ -24,7 +24,7 @@ class CreateContractsTable extends Migration
             $table->foreign('branch_id')
                 ->references('id')
                 ->on('branches');
-            $table->integer('status');
+            $table->integer('status')->default(Contract::ACTIVE);
             $table->timestamps();
 
         });

@@ -24,9 +24,11 @@ class Table extends Model
      * @var array
      */
 
-    protected $table = [
-        'tables',
-    ];    
+    protected $table = 'tables';   
+    
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {

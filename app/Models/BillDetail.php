@@ -26,9 +26,11 @@ class BillDetail extends Model
      * @var array
      */
 
-    protected $table = [
-        'bill_detail',
-    ];    
+    protected $table = 'bill_detail';
+    
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {

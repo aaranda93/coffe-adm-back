@@ -27,9 +27,11 @@ class BranchProduct extends Model
      * @var array
      */
 
-    protected $table = [
-        'branch_product',
-    ];    
+    protected $table = 'branch_product';    
+    
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {

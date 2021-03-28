@@ -26,9 +26,11 @@ class Bill extends Model
      * @var array
      */
 
-    protected $table = [
-        'bills',
-    ];    
+    protected $table = 'bills';    
+    
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {

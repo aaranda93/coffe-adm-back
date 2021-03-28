@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Webpatser\Uuid\Uuid;
 class Role extends Model
 {
+    use HasFactory;
     
     /**
      * The attributes that are mass assignable.
@@ -13,9 +15,7 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'contract_shift_id',
-        'gross_total',
-        'discount',
+        'name',
         'status'
     ];
 
@@ -25,9 +25,11 @@ class Role extends Model
      * @var array
      */
 
-    protected $table = [
-        'roles',
-    ];    
+    protected $table = 'roles';    
+
+    protected $casts = [
+        'id' => 'string'
+    ];
     
     public static function boot()
     {
