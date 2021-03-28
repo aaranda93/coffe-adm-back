@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class BranchProduct extends Model
 {
+
+    const INACTIVE = 0;
+    const ACTIVE = 1;
     
     /**
      * The attributes that are mass assignable.

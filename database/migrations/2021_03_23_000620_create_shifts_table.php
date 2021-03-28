@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Shift;
 
 class CreateShiftsTable extends Migration
 {
@@ -21,7 +22,7 @@ class CreateShiftsTable extends Migration
                 ->on('branches');
             $table->dateTime('start');
             $table->dateTime('end');
-            $table->integer('status');
+            $table->integer('status')->default(Shift::ACTIVE);
             $table->timestamps();
         });
     }

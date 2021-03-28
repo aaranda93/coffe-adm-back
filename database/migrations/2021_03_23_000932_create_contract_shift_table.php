@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\ContractShift;
 
 class CreateContractShiftTable extends Migration
 {
@@ -23,7 +24,7 @@ class CreateContractShiftTable extends Migration
             $table->foreign('shift_id')
                 ->references('id')
                 ->on('shifts');
-            $table->integer('status');
+            $table->integer('status')->default(ContractShift::ACTIVE);
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\BranchProduct;
 
 class CreateBranchProductTable extends Migration
 {
@@ -26,7 +27,7 @@ class CreateBranchProductTable extends Migration
             $table->integer('price');
             $table->integer('discount');
             $table->integer('stock');
-            $table->integer('status');
+            $table->integer('status')->default(BranchProduct::ACTIVE);
             $table->timestamps();
         });
     }

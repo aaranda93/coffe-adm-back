@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Product;
 
 class CreateProductsTable extends Migration
 {
@@ -22,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('url_pic');
             $table->string('url_pic_min');
-            $table->integer('status');
+            $table->integer('status')->default(Product::ACTIVE);
             $table->timestamps();
         });
     }

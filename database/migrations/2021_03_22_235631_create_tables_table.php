@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Table;
 
 class CreateTablesTable extends Migration
 {
@@ -21,7 +22,7 @@ class CreateTablesTable extends Migration
                 ->references('id')
                 ->on('branches');
             $table->integer('capacity');
-            $table->integer('status');
+            $table->integer('status')->default(Table::AVAILABLE);
             $table->timestamps();
 
         });

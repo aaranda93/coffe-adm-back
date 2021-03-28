@@ -7,6 +7,8 @@ use Webpatser\Uuid\Uuid;
 
 class ContractShift extends Model
 {
+    const INACTIVE = 0;
+    const ACTIVE = 1;
     
     /**
      * The attributes that are mass assignable.

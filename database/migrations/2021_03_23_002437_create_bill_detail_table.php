@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\BillDetail;
 
 class CreateBillDetailTable extends Migration
 {
@@ -25,7 +26,7 @@ class CreateBillDetailTable extends Migration
                 ->on('branch_product');
             $table->integer('gross_total');
             $table->integer('discount');
-            $table->integer('status');
+            $table->integer('status')->default(BillDetail::ACTIVE);
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Bill;
 
 class CreateBillsTable extends Migration
 {
@@ -25,7 +26,7 @@ class CreateBillsTable extends Migration
                 ->on('contract_shift');
             $table->integer('gross_total');
             $table->integer('discount');
-            $table->integer('status');
+            $table->integer('status')->default(Bill::ACTIVE);
             $table->timestamps();
         });
     }

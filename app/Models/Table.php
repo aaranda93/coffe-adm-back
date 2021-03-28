@@ -7,6 +7,14 @@ use Webpatser\Uuid\Uuid;
 
 class Table extends Model
 {
+
+    /**
+     * status.
+     */
+    const INACTIVE = 0;
+    const AVAILABLE = 1;
+    const OCCUPIED = 2;
+
     
     /**
      * The attributes that are mass assignable.
