@@ -16,6 +16,7 @@
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
+    
     //user routes
 
     $router->post('users', ['uses' => 'UserController@create'] );

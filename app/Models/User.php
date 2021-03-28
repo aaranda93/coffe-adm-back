@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Webpatser\Uuid\Uuid;
+use Laravel\Passport\HasApiTokens;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
@@ -15,10 +14,11 @@ use App\Models\Branches;
 use App\Models\Contract;
 use App\Models\Company;
 use App\Models\ContractRole;
+use Webpatser\Uuid\Uuid;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable, HasFactory, HasRelationships;
+    use HasApiTokens, Authenticatable, Authorizable, HasRelationships;
 
     const INACTIVE = 0;
     const ACTIVE = 1;
