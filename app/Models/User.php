@@ -159,32 +159,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function belongsToCompany($company_id){
 
-        try {
-
-            return $this->company()
-            ->where('companies.id',$company_id)
-            ->firstOrFail();
-
-        } catch (\Exception $th) {
-            
-            return null;
-
-        }
+        return (bool)$this->company()
+        ->where('companies.id',$company_id)
+        ->first();
 
     }
 
     public function belongsToBranch($branch_id){
-        try {
- 
-            return $this->company()
-            ->where('branches.id',$branch_id)
-            ->firstOrFail();
-
-        } catch (\Exception $th) {
-            
-            return null;
-
-        }
+        
+        return (bool)$this->company()
+        ->where('branches.id',$branch_id)
+        ->first();
 
     }
 

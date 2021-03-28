@@ -40,9 +40,25 @@ class Branch extends Model
     
     public function users(){
 
-        return $this->belongsToOne('App\User','App\Contract');
+        return $this->belongsToMany(
+            'App\Models\User',
+            'App\Models\Contract',
+
+        )
+        ->where('contracts.status', Contract::ACTIVE);
 
     }
+
+
+    public function contract($user_id){
+
+        return $this->users()->attach($user_id ,
+            ['id' => Uuid::generate(4)]
+        );
+
+    }
+
+    
     
     public static function boot()
     {
