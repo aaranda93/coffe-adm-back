@@ -19,7 +19,7 @@ class CreateContractRoleTable extends Migration
             $table->foreign('contract_id')
                 ->references('id')
                 ->on('contracts');
-            $table->uuid('role_id');
+            $table->id('role_id');
             $table->foreign('role_id')
                 ->references('id')
                 ->on('roles');

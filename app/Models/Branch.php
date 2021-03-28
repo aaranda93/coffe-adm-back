@@ -3,7 +3,7 @@
 namespace App\Models;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Role;
 class Branch extends Model
 {
 
@@ -50,11 +50,30 @@ class Branch extends Model
     }
 
 
-    public function contract($user_id){
+    public function contract($user_id, $isOwner = false){
 
-        return $this->users()->attach($user_id ,
-            ['id' => Uuid::generate(4)]
-        );
+        try {
+
+            $this->users()->attach($user_id ,
+                ['id' => $contract_id = Uuid::generate(4)]
+            );
+
+            if($isOwner){
+                
+                $contract = Contract::findorfail($contract_id);
+                $contract->addRole(Role::OWNER);
+
+            }
+
+            return;
+
+        } catch (\Exception $th) {
+
+            throw $th;
+
+        }
+
+
 
     }
 

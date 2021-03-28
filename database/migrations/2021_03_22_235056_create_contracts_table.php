@@ -20,7 +20,7 @@ class CreateContractsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->uuid('branch_id');
+            $table->uuid('branch_id')->nullable();
             $table->foreign('branch_id')
                 ->references('id')
                 ->on('branches');

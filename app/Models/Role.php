@@ -7,6 +7,21 @@ use Webpatser\Uuid\Uuid;
 
 class Role extends Model
 {
+    /**
+     * status.
+     */
+    const INACTIVE = 0;
+    const ACTIVE = 1;
+
+
+    /**
+     * types.
+     */
+    const SUPERADMIN = 1;
+    const OWNER = 2;
+    const ADMIN = 3;
+    const WAITER = 4;
+    const CASHIER = 4;
     
     /**
      * The attributes that are mass assignable.
@@ -14,6 +29,7 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'status'
     ];
