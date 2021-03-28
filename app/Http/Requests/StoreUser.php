@@ -46,13 +46,13 @@ class StoreUser extends FormRequest
     public function messages()
     {
         return[
+            
             'nid.cl_rut' => 'El rut debe ser válido',
             'nid.unique' => 'El rut ya está registrado',
             'required' => 'El campo es requerido',
             'password.min' => 'La contraseña debe contener por lo menos 8 caracteres',
             'email.max' => 'El campo tiene un largo máximo de 60 caracteres',
             'email'      => 'El correo debe ser un correo válido',
-            
         ];
     }
 

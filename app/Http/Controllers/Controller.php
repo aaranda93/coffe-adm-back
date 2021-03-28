@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Constants\ApiResponse;
+use App\Http\Constants\ApiResponse as Api;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -13,7 +13,7 @@ class Controller extends BaseController
         response()->json(
             [
                 'code' => $code, 
-                'message' => ApiResponse::CODE_MESSAGES[$code],
+                'message' => Api::CODE_MESSAGES[$code],
                 'data' => $data
             ]
             , $code
