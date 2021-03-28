@@ -26,13 +26,13 @@ class UserController extends Controller
 
     public function show($user_id)
     {
-        $users = User::find($user_id)
+        $user = User::find($user_id)
         ->first();
 
-        return $this->response(Api::OK, $users);
+        return $this->response(Api::OK, $user);
     }
 
-    public function store(StoreUser $request, $user_id)
+    public function store(StoreUser $request)
     {
         $newUser = User::create($request->all());
 
