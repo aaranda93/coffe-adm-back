@@ -15,21 +15,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function index(StoreUser $request)
+    public function index(Request $request)
     {
 
+        $users = User::filter($request->all())
+        ->get();
 
+        return $this->response(Api::OK, $users);
 
     }
     public function show($user_id)
     {
-        $user = User::find($user_id);
-        return $this->response(Api::OK, $user);
+
+        $users = User::find($user_id)
+        ->first();
+
+        return $this->response(Api::OK, $users);
         
     }
-    public function store(Request $request, $user_id)
+    public function store(StoreUser $request, $user_id)
     {
-        
+
         $newUser = User::Create($request->all());
         return $this->response(Api::CREATED, $newUser);
         

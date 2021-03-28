@@ -44,4 +44,42 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $model->id = (string) Uuid::generate(4);
         });
     }
+
+    static function filter(Array $parameters){
+
+        $query = self::select('users.*');
+
+        if(isset($parameters['nid']))
+            $query = $query->where(function($query) use($parameters) {
+                $query->where(\DB::raw('LOWER(users.nid)'), strtolower($parameters['nid']))
+                ->orWhere(\DB::raw('LOWER(users.nid)'), 'like', '%' . strtolower(implode("",explode(".",$parameters['nid']))) . '%');
+            });
+        
+        if(isset($parameters['email'])) 
+            $query = $query->where('users.email', $parameters['email']);
+            
+        if(isset($parameters['status'])) 
+            $query = $query->where('users.status', $parameters['status']);
+
+        if(isset($parameters['branch_id'])) 
+            $query = $query
+            ->join('contracts', 'contracts.user_id', 'users.id')
+            ->join('branches', 'branches.id', 'contracs.branch_id')
+            ->where('brnaches.id', $parameters['branch_id']);
+
+        if(isset($parameters['company_id'])) 
+            $query = $query
+            ->join('contracts', 'contracts.user_id', 'users.id')
+            ->join('branches', 'branches.id', 'contracs.branch_id')
+            ->join('companies', 'companies.id', 'branches.company_id')
+            ->where('companies.id', $parameters['company_id']);
+
+        return $query;
+    }
+
+/*     public function branch(){
+
+        return $this->belongsToMany('App\Branch','contracts');
+
+    } */
 }
