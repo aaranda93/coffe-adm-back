@@ -8,7 +8,7 @@ use Webpatser\Uuid\Uuid;
 class Shift extends Model
 {
 
-        /**
+    /**
      * status.
      */
     const INACTIVE = 0;
