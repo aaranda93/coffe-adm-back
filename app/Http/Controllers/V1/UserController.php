@@ -17,34 +17,35 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
         $users = User::filter($request->all())
         ->get();
 
         return $this->response(Api::OK, $users);
-
     }
+    
     public function show($user_id)
     {
-
         $users = User::find($user_id)
         ->first();
 
         return $this->response(Api::OK, $users);
-        
     }
+
     public function store(StoreUser $request, $user_id)
     {
+        $newUser = User::create($request->all());
 
-        $newUser = User::Create($request->all());
         return $this->response(Api::CREATED, $newUser);
-        
     }
+
     public function update(Request $request, $user_id)
     {
-       
-        
+        $user = User::find($user_id);
+        $user->update($request->all());
+
+        return $this->response(Api::OK, $user);
     }
+
     public function destroy($user_id)
     {
        
