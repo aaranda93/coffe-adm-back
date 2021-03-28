@@ -23,6 +23,15 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('users/{user_id}', ['uses' => 'UserController@update'] );
 
 
+
+    //user companies
+
+    $router->post('companies', ['uses' => 'Company@create'] );
+    $router->get('companies', ['uses' => 'Company@index'] );
+    $router->put('companies/{company_id}', ['uses' => 'Company@update'] );
+
+
+
     //contract routes
     $router->post('branches/{branch_id}/contracts', ['uses' => 'ContractController@create']);
 

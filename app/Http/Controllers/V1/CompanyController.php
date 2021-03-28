@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\V1;
-use App\Http\Requests\Users\StoreUser;
-use App\Http\Requests\Users\StoreUpdate;
 use Illuminate\Http\Request;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
