@@ -14,7 +14,10 @@ use App\Models\Branches;
 use App\Models\Contract;
 use App\Models\Company;
 use App\Models\ContractRole;
+
 use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Facades\Hash;
+
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -31,6 +34,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'surnames',
         'forenames',
         'email',
+        'phone',
         'url_pic',
         'url_pic_min',
         'password',
@@ -59,6 +63,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $model->id = (string) Uuid::generate(4);
         });
     }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
+
 
     static function filter(Array $parameters){
 
