@@ -18,8 +18,7 @@ class UserController extends Controller
     public function index(StoreUser $request)
     {
 
-        $newUser = User::Create($request->all());
-        return $this->response(Api::CREATED, $newUser);
+
 
     }
     public function show($user_id)
@@ -30,7 +29,9 @@ class UserController extends Controller
     }
     public function store(Request $request, $user_id)
     {
-       
+        
+        $newUser = User::Create($request->all());
+        return $this->response(Api::CREATED, $newUser);
         
     }
     public function update(Request $request, $user_id)
