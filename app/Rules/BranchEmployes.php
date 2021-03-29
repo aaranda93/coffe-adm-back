@@ -39,6 +39,6 @@ class BranchEmployes implements Rule
      */
     public function message()
     {
-        return 'No tiene permitido realizar esta accion sobre esta sucursal';
+        return 'No tiene permitido ver usuarios de esta sucursal';
     }
 }

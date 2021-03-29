@@ -39,6 +39,6 @@ class CompanyEmployes implements Rule
      */
     public function message()
     {
-        return 'No tiene permitido realizar esta accion sobre esta compañia';
+        return 'No tiene permitido ver usuarios de esta compañia';
     }
 }

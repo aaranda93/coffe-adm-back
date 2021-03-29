@@ -15,7 +15,7 @@ namespace App\Http\Constants;
 
             self::UNAUTHORIZED => 'unauthorized',
             self::NOT_FOUND => 'not found',
-            self::BAD_REQUEST => 'not found',
+            self::BAD_REQUEST => 'bad request',
             self::OK => 'ok',
             self::CREATED => 'created',
         ];

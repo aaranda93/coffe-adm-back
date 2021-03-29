@@ -40,6 +40,6 @@ class BelongsToBranch implements Rule
      */
     public function message()
     {
-        return 'No tiene permitido realizar esta accion sobre esta sucursal';
+        return 'No tiene permitido realizar esta accion sobre usuarios de esta sucursal';
     }
 }
