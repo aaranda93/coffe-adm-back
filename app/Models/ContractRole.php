@@ -18,6 +18,7 @@ class ContractRole extends Model
      */
     protected $fillable = [
         'contract_id',
+        'id',
         'role_id',
         'status'
     ];

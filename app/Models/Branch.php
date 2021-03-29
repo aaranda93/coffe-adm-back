@@ -4,6 +4,8 @@ namespace App\Models;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Role;
+use App\Models\Contract;
+
 class Branch extends Model
 {
 
@@ -47,6 +49,13 @@ class Branch extends Model
         )
         ->where('contracts.status', Contract::ACTIVE);
 
+    }
+
+    public function hasEmploy($user_id){
+
+        return (bool) $this->users()
+        ->where('users.id',$user_id)
+        ->first();
     }
 
 

@@ -3,6 +3,9 @@
 namespace App\Models;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Branches;
+use App\Models\Contract;
+use App\Models\User;
 
 class Company extends Model
 {
@@ -30,6 +33,7 @@ class Company extends Model
      * @var array
      */
 
+
     protected $table = 'companies';   
 
     protected $casts = [
@@ -44,6 +48,39 @@ class Company extends Model
         self::creating(function ($model) {
             $model->id = (string) Uuid::generate(4);
         });
+    }
+
+
+    public function users(){
+
+
+        return $this->hasOneDeep(
+            'App\Models\User', [
+                'App\Models\Branch', 
+                'App\Models\Contract'
+            ],
+            [
+                'company_id', 
+                'branch_id', 
+                'id'
+             ],
+             [
+               'id',
+               'id',
+               'user_id'
+             ]
+        )
+        ->where('contracts.status', Contract::ACTIVE)
+        ->where('branches.status', Branch::ACTIVE)
+        ->where('users.status', User::ACTIVE);
+
+    }
+
+    public function hasEmploy($user_id){
+
+        return (bool) $this->users()
+        ->where('users.id',$user_id)
+        ->first();
     }
 
     

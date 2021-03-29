@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Company;
 
 class BelongsToCompany implements Rule
 {
@@ -12,8 +12,10 @@ class BelongsToCompany implements Rule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($company_id)
     {
+
+        $this->company = Company::findorfail($company_id);
         
     }
 
@@ -26,7 +28,9 @@ class BelongsToCompany implements Rule
      */
     public function passes($attribute, $value)
     {
-        return Auth::user()->belongsToCompany($value);
+        $company = $this->company;
+
+        return  $company->hasEmploy($value);
     }
 
     /**
@@ -36,6 +40,6 @@ class BelongsToCompany implements Rule
      */
     public function message()
     {
-        return 'No tiene permitido realizar esta accion con su actual rol';
+        return 'No tiene permitido realizar esta accion sobre esta compañia';
     }
 }

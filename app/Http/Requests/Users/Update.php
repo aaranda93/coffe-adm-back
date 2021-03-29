@@ -7,8 +7,11 @@ use App\Http\Constants\ApiResponse as Api;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
 use App\Http\Controllers\Controller as Controller;
+
+//Rules
+
+use App\Rules\BelongsToBranch;
 
 class Update extends RequestAbstract
 {
@@ -22,6 +25,18 @@ class Update extends RequestAbstract
         return true;
     }
 
+
+    public function all($keys = NULL): array
+    {
+        return array_push(
+            parent::all(),
+            [
+                "user_id" => $this->route('user_id'),
+                'requester_id' => Auth::user()->id
+            ]
+        );
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -30,7 +45,25 @@ class Update extends RequestAbstract
     public function rules(): array
     {
         return [
-
+            'requester_id' => [
+                new HasEitherRole(
+                    [
+                        Role::ADMIN,
+                        Role::SUPERADMIN,
+                        Role::OWNER,
+                    ]
+            )],
+            'user_id' => [
+                (Auth::user()->hasEitherRole([
+                    Role::SUPERADMIN
+                ])) 
+                ?   null
+                :   (Auth::user()->hasEitherRole([
+                        Role::ADMIN
+                    ])) 
+                    ? new BelongsToBranch(Auth::user()->branch->id)
+                    : new BelongsToCompany(Auth::user()->company->id)
+             ],
             'email' => 'email|max:60',
             'phone' => 'max:60',
             'birthday' => 'date',

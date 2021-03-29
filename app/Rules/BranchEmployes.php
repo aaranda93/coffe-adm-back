@@ -3,19 +3,18 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Models\Branch;
+use App\Models\User;
 
-class BelongsToBranch implements Rule
+class BranchEmployes implements Rule
 {
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($branch_id)
+    public function __construct($user_id)
     {
-
-        $this->branch = Branch::findorfail($branch_id);
+        $this->user = User::findorfail($user_id);
         
     }
 
@@ -28,9 +27,9 @@ class BelongsToBranch implements Rule
      */
     public function passes($attribute, $value)
     {
-        $branch = $this->branch;
+        $user = $this->user;
 
-        return  $branch->hasEmploy($value);
+        return $user->belongsToBranch($value) ;
     }
 
     /**

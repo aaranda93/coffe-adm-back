@@ -54,6 +54,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'id' => 'string'
     ];
 
+    protected $with = [
+        'roles',
+        'company',
+        'branch'
+    ];
+
     protected $keyType = 'string';
 
     public static function boot()
@@ -169,17 +175,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function belongsToCompany($company_id){
 
-        return (bool)$this->company()
-        ->where('companies.id',$company_id)
-        ->first();
-
+        return ($this->company->id == $company_id);
     }
 
     public function belongsToBranch($branch_id){
         
-        return (bool)$this->company()
-        ->where('branches.id',$branch_id)
-        ->first();
+        return ($this->branch->id == $branch_id);
 
     }
 

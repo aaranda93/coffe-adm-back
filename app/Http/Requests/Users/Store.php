@@ -22,6 +22,18 @@ class Store extends RequestAbstract
         return true;
     }
 
+    public function all($keys = NULL): array
+    {
+        $data = parent::all();
+
+       
+        return array_merge(
+            $data,
+            [
+                'requester_id' => Auth::user()->id
+            ]
+        );
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -30,7 +42,14 @@ class Store extends RequestAbstract
     public function rules(): array
     {
         return [
-
+            'requester_id' => [
+                new HasEitherRole(
+                    [
+                        Role::ADMIN,
+                        Role::SUPERADMIN,
+                        Role::OWNER,
+                    ]
+            )],
             'email' => 'required|email|max:60',
             'phone' => 'required|max:60',
             'birthday' => 'required|date',

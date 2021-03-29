@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -16,7 +17,8 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        return $this->response(Api::OK, $request->user());
+        
+        return $this->response(Api::OK, Auth::user());
     }
 
 }
