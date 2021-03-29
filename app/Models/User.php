@@ -183,10 +183,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     }
 
-    public function hasEitherRole(array $roleTypes){
+    public function hasEitherRole(array $roles){
 
         return (bool)$this->roles()
-            ->whereIn('roles.name', $roleTypes)
+            ->whereIn('roles.id', $roles)
             ->first();
     }
 

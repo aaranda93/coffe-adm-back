@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\V1;
-use App\Http\Requests\Users\StoreUser;
-use App\Http\Requests\Users\StoreUpdate;
-use App\Http\Requests\Users\Index3;
+use App\Http\Requests\Users\Store as StoreUser;
+use App\Http\Requests\Users\Update as UpdateUser;
+use App\Http\Requests\Users\Index as IndexUser;
 use Illuminate\Http\Request;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
@@ -17,7 +17,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function index(Index3 $request)
+    public function index(IndexUser $request)
     {
 
         $users = User::filter($request->all())
@@ -41,7 +41,7 @@ class UserController extends Controller
         return $this->response(Api::CREATED, $newUser);
     }
 
-    public function update(StoreUpdate $request, $user_id)
+    public function update(UpdateUser $request, $user_id)
     {
         $user = User::find($user_id);
         $user->update($request->all());
