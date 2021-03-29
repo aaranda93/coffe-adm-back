@@ -9,6 +9,7 @@
         "freshwork/chilean-bundle": "^2.1",
         "laravel/lumen-framework": "^8.0",
         "nomadnt/lumen-passport": "^10.1",
+        "pearl/lumen-request-validate": "^1.6",
         "staudenmeir/eloquent-has-many-deep": "^1.7",
         "webpatser/laravel-uuid": "^3.0"
     },

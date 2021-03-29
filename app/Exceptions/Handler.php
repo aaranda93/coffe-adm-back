@@ -19,8 +19,8 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         AuthorizationException::class,
         HttpException::class,
-        ModelNotFoundException::class,
-        ValidationException::class,
+        ModelNotFoundException::class,/* 
+        ValidationException::class, */
     ];
 
     /**
@@ -51,4 +51,6 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
+
+    
 }

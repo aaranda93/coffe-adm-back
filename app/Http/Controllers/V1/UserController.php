@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 use App\Http\Requests\Users\StoreUser;
 use App\Http\Requests\Users\StoreUpdate;
+use App\Http\Requests\Users\Index3;
 use Illuminate\Http\Request;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
@@ -16,8 +17,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Index3 $request)
     {
+
         $users = User::filter($request->all())
         ->get();
 
