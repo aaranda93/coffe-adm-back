@@ -16,16 +16,29 @@
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
+
+
+  $router->group(['middleware' => 'client'], function () use ($router) {
+    
+    //register Route
+    $router->post('users', ['uses' => 'V1\UserController@create'] );
+    
+
+  });
+
+
+
+
+  $router->group(['middleware' => 'auth:api'], function () use ($router) {
     
     //user routes
 
-    $router->post('users', ['uses' => 'V1\UserController@create'] );
     $router->get('users', ['uses' => 'V1\UserController@index'] );
     $router->put('users/{user_id}', ['uses' => 'V1\UserController@update'] );
 
 
-
-    //user companies
+    
+    //companies routes
 
     $router->post('companies', ['uses' => 'V1\ContractController@create'] );
     $router->get('companies', ['uses' => 'V1\ContractController@index'] );
@@ -36,5 +49,16 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     //contract routes
 
     $router->post('branches/{branch_id}/contracts', ['uses' => 'V1\ContractController@create']);
+
+  });
+    
+    
+
+
+
+
+
+
+
 
   });

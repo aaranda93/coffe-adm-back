@@ -84,7 +84,9 @@ $app->configure('auth');
 
 $app->routeMiddleware([
     'auth'     => App\Http\Middleware\Authenticate::class,
-    'throttle' => Nomadnt\LumenPassport\Middleware\ThrottleRequests::class
+    'throttle' => Nomadnt\LumenPassport\Middleware\ThrottleRequests::class,
+    'client' => App\Http\Middleware\CheckClientCredentials::class
+
 ]);
 
 /*
