@@ -9,8 +9,7 @@ class Controller extends BaseController
 
     static function response($code, $data = null){
 
-
-        response()->json(
+        return response()->json(
             [
                 'code' => $code, 
                 'message' => Api::CODE_MESSAGES[$code],

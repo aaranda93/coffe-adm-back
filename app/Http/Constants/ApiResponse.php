@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Constants;
+
     class ApiResponse
     {
         CONST UNAUTHORIZED = 404;
@@ -11,11 +13,11 @@
 
         CONST CODE_MESSAGES = [
 
-            UNAUTHORIZED => 'unauthorized',
-            NOT_FOUND => 'not found',
-            BAD_REQUEST => 'not found',
-            OK => 'ok',
-            CREATED => 'created',
+            self::UNAUTHORIZED => 'unauthorized',
+            self::NOT_FOUND => 'not found',
+            self::BAD_REQUEST => 'not found',
+            self::OK => 'ok',
+            self::CREATED => 'created',
         ];
         
 

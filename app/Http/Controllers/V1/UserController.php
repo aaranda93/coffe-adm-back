@@ -6,7 +6,7 @@ use App\Http\Requests\Users\StoreUpdate;
 use Illuminate\Http\Request;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
-use App\Modelsl\User;
+use App\Models\User;
 
 class UserController extends Controller
 {
