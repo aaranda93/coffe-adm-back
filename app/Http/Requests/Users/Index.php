@@ -34,8 +34,6 @@ class Index extends RequestAbstract
     public function all($keys = NULL): array
     {
         $data = parent::all();
-
-       
         return array_merge(
             $data,
             [
@@ -63,7 +61,7 @@ class Index extends RequestAbstract
             ],
 
             'branch_id' => [
-                
+                'uuid',
                 'exists:App\Models\Branch,id',
                 Rule::requiredIf(
                     Auth::user()->hasEitherRole([
@@ -84,6 +82,7 @@ class Index extends RequestAbstract
                         Role::OWNER,
                     ]
                 ),
+                'uuid',
                 'exists:App\Models\Company,id',
                 Rule::requiredIf(
                     Auth::user()->hasEitherRole([
@@ -110,6 +109,7 @@ class Index extends RequestAbstract
     {
         return[
             'branch_id.exists' => 'La sucursal ingresada no existe',
+            'company_id.uuid' => 'Valor ingresado invalido',
             'company_id.exists' => 'La compañia ingresada no existe',
         ];
     }

@@ -8,9 +8,14 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Http\Controllers\Controller as Controller;
+use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
-//Rules
 
+//rules
+
+use App\Rules\HasEitherRole;
+use App\Rules\BelongsToCompany;
 use App\Rules\BelongsToBranch;
 use App\Rules\IsSameUser;
 
@@ -29,13 +34,15 @@ class Show extends RequestAbstract
 
     public function all($keys = NULL): array
     {
-        return array_push(
-            parent::all(),
+        $data = parent::all();
+        return array_merge(
+            $data,
             [
+                'requester_id' => Auth::user()->id,
                 "user_id" => $this->route('user_id'),
-                'requester_id' => Auth::user()->id
             ]
         );
+
     }
 
     /**
@@ -45,9 +52,12 @@ class Show extends RequestAbstract
      */
     public function rules(): array
     {
+
+        
         return [
 
             'user_id' => [
+                'uuid',
                 'exists:App\Models\User,id',
                 (Auth::user()->hasEitherRole([
                     Role::SUPERADMIN

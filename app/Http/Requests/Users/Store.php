@@ -7,8 +7,13 @@ use App\Http\Constants\ApiResponse as Api;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
+use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller as Controller;
+
+//rules
+
+use App\Rules\HasEitherRole;
 
 class Store extends RequestAbstract
 {
