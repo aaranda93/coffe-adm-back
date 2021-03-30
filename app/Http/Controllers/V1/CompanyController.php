@@ -4,6 +4,8 @@ namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Http\Requests\Companies\Index as IndexCompany;
 use App\Http\Requests\Companies\Show as ShowCompany;
+use App\Http\Requests\Companies\Store as StoreCompany;
+use App\Http\Requests\Companies\Update as UpdateCompany;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
@@ -30,14 +32,14 @@ class CompanyController extends Controller
         return $this->response(Api::OK, $company);
     }
 
-    public function store(StoreUser $request)
+    public function store(StoreCompany $request)
     {
         $newCompany = Company::create($request->all());
 
         return $this->response(Api::CREATED, $newCompany);
     }
 
-    public function update(StoreUpdate $request, $company_id)
+    public function update(UpdateCompany $request, $company_id)
     {
         $company = Company::find($company_id);
         $company->update($request->all());

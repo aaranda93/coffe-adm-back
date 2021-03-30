@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Users;
+namespace App\Http\Requests\Companies;
 
 use Pearl\RequestValidate\RequestAbstract;
 use App\Http\Constants\ApiResponse as Api;
@@ -13,10 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 //Rules
 
-use App\Rules\BelongsToBranch;
-use App\Rules\IsSameUser;
+
+use App\Rules\CompanyEmployes;
 use App\Rules\HasEitherRole;
-use App\Rules\BelongsToCompany;
 
 
 class Update extends RequestAbstract
@@ -39,7 +38,7 @@ class Update extends RequestAbstract
             $data,
             [
                 'requester_id' => Auth::user()->id,
-                "user_id" => $this->route('user_id'),
+                "company_id" => $this->route('company_id'),
             ]
         );
     }
@@ -55,34 +54,23 @@ class Update extends RequestAbstract
             'requester_id' => [
                 new HasEitherRole(
                     [
-                        Role::ADMIN,
                         Role::SUPERADMIN,
                         Role::OWNER,
                     ]
             )],
-            'user_id' => [
+            'company_id' => [
                 'uuid',
-                'exists:App\Models\User,id',
+                'exists:App\Models\Company,id',
                 (Auth::user()->hasEitherRole([
                     Role::SUPERADMIN
                 ])) 
                 ?   null
-                :   (Auth::user()->hasEitherRole([
-                        Role::OWNER
-                    ])) 
-                    ?   new BelongsToCompany(Auth::user()->company)
-                    :   (Auth::user()->hasEitherRole([
-                            Role::ADMIN
-                        ])) 
-                        ?   new BelongsToBranch(Auth::user()->branch)
-                        :   new IsSameUser(Auth::user()->id)
+                :   new CompanyEmployes(Auth::user())
   
              ],
-            'email' => 'email|max:60|unique:users,nid,'.Auth::user()->id,
+            'email' => 'email|max:60|unique:companies,email,'.Auth::user()->id,
             'phone' => 'max:60',
-            'birthday' => 'date',
-            'nid' => 'cl_rut|unique:users,nid,'.Auth::user()->id,
-            'password' => 'min:8'
+            'nid' => 'cl_rut|unique:companies,nid,'.Auth::user()->id,
         ];
     }
 
