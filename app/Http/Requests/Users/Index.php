@@ -94,7 +94,7 @@ class Index extends RequestAbstract
                     Role::SUPERADMIN
                 ])) 
                 ?   null
-                :   new CompanyEmployes(Auth::user()->id),
+                :   new CompanyEmployes(Auth::user()),
 
             ],
 
