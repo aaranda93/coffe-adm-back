@@ -16,34 +16,34 @@ class BranchController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = Branch::get();
+        $branches = Branch::get();
 
-        return $this->response(Api::OK, $companies);
+        return $this->response(Api::OK, $branches);
     }
 
-    public function show(Request $reques, $company_id)
+    public function show(Request $reques, $branch_id)
     {
-        $company = Branch::find($company_id);
+        $branch = Branch::find($branch_id);
 
-        return $this->response(Api::OK, $company);
+        return $this->response(Api::OK, $branch);
     }
 
     public function store(Request $request)
     {
-        $newCompany = Branch::create($request->all());
+        $newbranch = Branch::create($request->all());
 
-        return $this->response(Api::CREATED, $newCompany);
+        return $this->response(Api::CREATED, $newbranch);
     }
 
-    public function update(Request $request, $company_id)
+    public function update(Request $request, $branch_id)
     {
-        $company = Branch::find($company_id);
-        $company->update($request->all());
+        $branch = Branch::find($branch_id);
+        $branch->update($request->all());
 
-        return $this->response(Api::OK, $company);
+        return $this->response(Api::OK, $branch);
     }
 
-    public function destroy($company_id)
+    public function destroy($branch_id)
     {
        
         
