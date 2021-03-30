@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Http\Requests\Companies\Index as IndexCompany;
+use App\Http\Requests\Companies\Show as ShowCompany;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
@@ -22,10 +23,9 @@ class CompanyController extends Controller
         return $this->response(Api::OK, $companies);
     }
 
-    public function show($company_id)
+    public function show(ShowCompany $reques, $company_id)
     {
-        $company = Company::find($company_id)
-        ->first();
+        $company = Company::find($company_id);
 
         return $this->response(Api::OK, $company);
     }
