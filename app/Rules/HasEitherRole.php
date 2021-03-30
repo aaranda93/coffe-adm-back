@@ -4,6 +4,9 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Constants\ApiResponse as Api;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Controllers\Controller;
 
 class HasEitherRole implements Rule
 {
@@ -36,6 +39,12 @@ class HasEitherRole implements Rule
      */
     public function message()
     {
-        return 'No tiene permitido realizar esta accion con su actual rol';
+        throw new HttpResponseException(
+
+            Controller::response(
+                Api::UNAUTHORIZED,
+                'No tiene permitido realizar esta accion con su actual rol' 
+            )
+        );
     }
 }

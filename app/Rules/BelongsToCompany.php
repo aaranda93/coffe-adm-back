@@ -2,6 +2,9 @@
 
 namespace App\Rules;
 
+use App\Http\Constants\ApiResponse as Api;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\Company;
 
@@ -40,6 +43,12 @@ class BelongsToCompany implements Rule
      */
     public function message()
     {
-        return 'No tiene permitido realizar esta accion sobre esta compañia';
+        throw new HttpResponseException(
+
+            Controller::response(
+                Api::UNAUTHORIZED,
+                'No tiene permitido realizar esta accion sobre usuarios de esta compañia'
+            )
+        );
     }
 }

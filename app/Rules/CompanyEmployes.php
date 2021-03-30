@@ -2,6 +2,9 @@
 
 namespace App\Rules;
 
+use App\Http\Constants\ApiResponse as Api;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\User;
 
@@ -39,6 +42,12 @@ class CompanyEmployes implements Rule
      */
     public function message()
     {
-        return 'No tiene permitido ver usuarios de esta compañia';
+        throw new HttpResponseException(
+
+            Controller::response(
+                Api::UNAUTHORIZED,
+                'No tiene permitido ver usuarios de esta compañia'
+            )
+        );
     }
 }

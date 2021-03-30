@@ -4,7 +4,7 @@ namespace App\Http\Constants;
 
     class ApiResponse
     {
-        CONST UNAUTHORIZED = 404;
+        CONST UNAUTHORIZED = 401;
         CONST NOT_FOUND = 404;
         CONST BAD_REQUEST = 400;
         CONST OK = 200;
