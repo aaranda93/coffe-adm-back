@@ -63,7 +63,8 @@ class Index extends RequestAbstract
             ],
 
             'branch_id' => [
-                'exists:App\Models\Branch',
+                
+                'exists:App\Models\Branch,id',
                 Rule::requiredIf(
                     Auth::user()->hasEitherRole([
                         Role::ADMIN
@@ -77,7 +78,13 @@ class Index extends RequestAbstract
 
             ],
             'company_id' => [
-                'exists:App\Models\Company',
+                new HasEitherRole(
+                    [
+                        Role::SUPERADMIN,
+                        Role::OWNER,
+                    ]
+                ),
+                'exists:App\Models\Company,id',
                 Rule::requiredIf(
                     Auth::user()->hasEitherRole([
                         Role::OWNER

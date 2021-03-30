@@ -48,7 +48,7 @@ class Show extends RequestAbstract
         return [
 
             'user_id' => [
-                'exists:App\Models\User',
+                'exists:App\Models\User,id',
                 (Auth::user()->hasEitherRole([
                     Role::SUPERADMIN
                 ])) 
@@ -56,11 +56,11 @@ class Show extends RequestAbstract
                 :   (Auth::user()->hasEitherRole([
                         Role::OWNER
                     ])) 
-                    ?   new BelongsToCompany(Auth::user()->company->id)
+                    ?   new BelongsToCompany(Auth::user()->company)
                     :   (Auth::user()->hasEitherRole([
                             Role::ADMIN
                         ])) 
-                        ?   new BelongsToBranch(Auth::user()->branch->id)
+                        ?   new BelongsToBranch(Auth::user()->branch)
                         :   new IsSameUser(Auth::user()->id)
   
              ],

@@ -95,13 +95,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         if(isset($parameters['branch_id'])) 
             $query = $query
             ->join('contracts', 'contracts.user_id', 'users.id')
-            ->join('branches', 'branches.id', 'contracs.branch_id')
-            ->where('brnaches.id', $parameters['branch_id']);
+            ->join('branches', 'branches.id', 'contracts.branch_id')
+            ->where('branches.id', $parameters['branch_id']);
 
         if(isset($parameters['company_id'])) 
             $query = $query
             ->join('contracts', 'contracts.user_id', 'users.id')
-            ->join('branches', 'branches.id', 'contracs.branch_id')
+            ->join('branches', 'branches.id', 'contracts.branch_id')
             ->join('companies', 'companies.id', 'branches.company_id')
             ->where('companies.id', $parameters['company_id']);
 

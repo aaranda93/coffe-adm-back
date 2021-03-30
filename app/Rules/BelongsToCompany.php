@@ -15,10 +15,10 @@ class BelongsToCompany implements Rule
      *
      * @return void
      */
-    public function __construct($company_id)
+    public function __construct($company)
     {
 
-        $this->company = Company::findorfail($company_id);
+        $this->company = $company;
         
     }
 

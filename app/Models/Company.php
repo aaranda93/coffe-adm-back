@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Branches;
 use App\Models\Contract;
 use App\Models\User;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Company extends Model
 {
+
+    use HasRelationships;
+
+    
     const INACTIVE = 0;
     const ACTIVE = 1;
     

@@ -14,10 +14,10 @@ class BelongsToBranch implements Rule
      *
      * @return void
      */
-    public function __construct($branch_id)
+    public function __construct($branch)
     {
 
-        $this->branch = Branch::findorfail($branch_id);
+        $this->branch = $branch;
         
     }
 

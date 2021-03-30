@@ -20,8 +20,8 @@ class UserController extends Controller
      */
     public function index(IndexUser $request)
     {
-
         $users = User::filter($request->all())
+        ->without('company','branch','roles')
         ->get();
 
         return $this->response(Api::OK, $users);
@@ -29,8 +29,8 @@ class UserController extends Controller
 
     public function show(ShowUser $request ,$user_id)
     {
-        $user = User::find($user_id)
-        ->first();
+        $user = User::without('company','branch','roles')
+        ->find($user_id);
 
         return $this->response(Api::OK, $user);
     }

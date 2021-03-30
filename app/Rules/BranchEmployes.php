@@ -15,9 +15,10 @@ class BranchEmployes implements Rule
      *
      * @return void
      */
-    public function __construct($user_id)
+    public function __construct($user)
     {
-        $this->user = User::findorfail($user_id);
+        $this->user = $user;
+        
         
     }
 
@@ -30,8 +31,9 @@ class BranchEmployes implements Rule
      */
     public function passes($attribute, $value)
     {
-        $user = $this->user;
 
+        $user = $this->user;
+        
         return $user->belongsToBranch($value) ;
     }
 

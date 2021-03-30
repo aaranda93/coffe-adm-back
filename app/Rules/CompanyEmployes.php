@@ -15,9 +15,9 @@ class CompanyEmployes implements Rule
      *
      * @return void
      */
-    public function __construct($user_id)
+    public function __construct($user)
     {
-        $this->user = User::findorfail($user_id);
+        $this->user = $user;
         
     }
 
