@@ -4,8 +4,7 @@ namespace App\Models;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Branches;
-use App\Models\Contract;
-use App\Models\User;
+use App\Models\Product;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Company extends Model
@@ -13,7 +12,7 @@ class Company extends Model
 
     use HasRelationships;
 
-    
+
     const INACTIVE = 0;
     const ACTIVE = 1;
     
@@ -55,6 +54,18 @@ class Company extends Model
         });
     }
 
+    public function products(){
+
+        return $this->HasMany('App\Models\Product')
+        ->where('products.status', Product::ACTIVE);
+    }
+
+    public function sellsProduct($product_id){
+
+        return (bool)$this->products()
+        ->where('products.id', $product_id)
+        ->first();
+    }
 
     public function users(){
 
