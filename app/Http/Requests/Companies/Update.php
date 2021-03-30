@@ -68,9 +68,9 @@ class Update extends RequestAbstract
                 :   new CompanyEmployes(Auth::user())
   
              ],
-            'email' => 'email|max:60|unique:companies,email,'.Auth::user()->id,
+            'email' => 'email|max:60|unique:companies,email,'.$this->route('company_id'),
             'phone' => 'max:60',
-            'nid' => 'cl_rut|unique:companies,nid,'.Auth::user()->id,
+            'nid' => 'cl_rut|unique:companies,nid,'.$this->route('company_id'),
         ];
     }
 

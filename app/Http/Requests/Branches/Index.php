@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Http\Requests\Company;
+namespace App\Http\Requests\Branches;
 
 use Pearl\RequestValidate\RequestAbstract;
 use App\Http\Constants\ApiResponse as Api;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller as Controller;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller as Controller;
 
 //rules
 
 use App\Rules\HasEitherRole;
+use App\Rules\CompanyEmployes;
 
-class Store extends RequestAbstract
+class Index extends RequestAbstract
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,15 +29,14 @@ class Store extends RequestAbstract
         return true;
     }
 
+
     public function all($keys = NULL): array
     {
         $data = parent::all();
-
-       
         return array_merge(
             $data,
             [
-                'requester_id' => Auth::user()->id,
+                'requester_id' => Auth::user()->id
             ]
         );
     }
@@ -46,19 +47,31 @@ class Store extends RequestAbstract
      */
     public function rules(): array
     {
+        
         return [
             'requester_id' => [
                 new HasEitherRole(
                     [
                         Role::SUPERADMIN,
+                        Role::OWNER,
                     ]
-            )],
-            'email' => 'required|email|max:60|unique:companies,email',
-            'phone' => 'required|max:60',
-            'nid' => 'required|unique:companies,nid|cl_rut',
-            'name' => 'required',
-            'status' => 'integer|between:0,1'
-
+                )
+            ],
+            'company_id' => [
+                'uuid',
+                'exists:App\Models\Company,id',
+                Rule::requiredIf(
+                    Auth::user()->hasEitherRole([
+                        Role::OWNER
+                    ])
+                ), 
+                (Auth::user()->hasEitherRole([
+                    Role::SUPERADMIN
+                ])) 
+                ?   null
+                :   new CompanyEmployes(Auth::user())
+  
+             ],
         ];
     }
 
@@ -70,14 +83,7 @@ class Store extends RequestAbstract
     public function messages(): array
     {
         return[
-                        
-            'status.between' => 'Status invalido',
-            'status.integer' => 'Status invalido',
-            'nid.cl_rut' => 'El rut debe ser válido',
-            'nid.unique' => 'El rut ya está registrado',
-            'required' => 'El campo es requerido',
-            'email.max' => 'El campo tiene un largo máximo de 60 caracteres',
-            'email'      => 'El correo debe ser un correo válido',
+
         ];
     }
     public function failedValidation(Validator $validator): ValidationException

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Company;
+namespace App\Http\Requests\Branches;
 
 use Pearl\RequestValidate\RequestAbstract;
 use App\Http\Constants\ApiResponse as Api;
@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller as Controller;
 //rules
 
 use App\Rules\HasEitherRole;
+use App\Rules\CompanyEmployes;
 
 class Store extends RequestAbstract
 {
@@ -36,6 +37,7 @@ class Store extends RequestAbstract
             $data,
             [
                 'requester_id' => Auth::user()->id,
+                "company_id" => $this->route('company_id'),
             ]
         );
     }
@@ -51,11 +53,23 @@ class Store extends RequestAbstract
                 new HasEitherRole(
                     [
                         Role::SUPERADMIN,
+                        Role::OWNER,
                     ]
-            )],
-            'email' => 'required|email|max:60|unique:companies,email',
+                )
+            ],
+            'company_id' => [
+                'uuid',
+                'exists:App\Models\Company,id',
+                (Auth::user()->hasEitherRole([
+                    Role::SUPERADMIN
+                ])) 
+                ?   null
+                :   new CompanyEmployes(Auth::user())
+
+            ],
+            'email' => 'required|email|max:60|unique:branches,email',
             'phone' => 'required|max:60',
-            'nid' => 'required|unique:companies,nid|cl_rut',
+            'nid' => 'required|unique:branches,nid|cl_rut',
             'name' => 'required',
             'status' => 'integer|between:0,1'
 

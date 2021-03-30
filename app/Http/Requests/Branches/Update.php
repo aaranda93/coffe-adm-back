@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Http\Requests\Company;
+namespace App\Http\Requests\Branches;
 
 use Pearl\RequestValidate\RequestAbstract;
 use App\Http\Constants\ApiResponse as Api;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Controllers\Controller as Controller;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller as Controller;
 
-//rules
+//Rules
 
+
+use App\Rules\BranchEmployes;
 use App\Rules\HasEitherRole;
 
-class Store extends RequestAbstract
+
+class Update extends RequestAbstract
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,18 +30,19 @@ class Store extends RequestAbstract
         return true;
     }
 
+
     public function all($keys = NULL): array
     {
         $data = parent::all();
-
-       
         return array_merge(
             $data,
             [
                 'requester_id' => Auth::user()->id,
+                "branch_id" => $this->route('branch_id'),
             ]
         );
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -51,14 +55,22 @@ class Store extends RequestAbstract
                 new HasEitherRole(
                     [
                         Role::SUPERADMIN,
+                        Role::OWNER,
                     ]
             )],
-            'email' => 'required|email|max:60|unique:companies,email',
-            'phone' => 'required|max:60',
-            'nid' => 'required|unique:companies,nid|cl_rut',
-            'name' => 'required',
-            'status' => 'integer|between:0,1'
-
+            'branch_id' => [
+                'uuid',
+                'exists:App\Models\Company,id',
+                (Auth::user()->hasEitherRole([
+                    Role::SUPERADMIN
+                ])) 
+                ?   null
+                :   new BranchEmployes(Auth::user())
+  
+             ],
+            'email' => 'email|max:60|unique:branches,email,'.$this->route('branch_id'),
+            'phone' => 'max:60',
+            'nid' => 'cl_rut|unique:branches,nid,'.$this->route('branch_id'),
         ];
     }
 
@@ -71,13 +83,9 @@ class Store extends RequestAbstract
     {
         return[
                         
-            'status.between' => 'Status invalido',
-            'status.integer' => 'Status invalido',
-            'nid.cl_rut' => 'El rut debe ser válido',
-            'nid.unique' => 'El rut ya está registrado',
-            'required' => 'El campo es requerido',
-            'email.max' => 'El campo tiene un largo máximo de 60 caracteres',
-            'email'      => 'El correo debe ser un correo válido',
+            'user_id.exists' => 'El usuario ingresado no existe',
+            'nid.unique' => 'El rut ingresado ya se encuentra usado',
+            'email.unique' => 'El email ingresado ya se encuentra usado'
         ];
     }
     public function failedValidation(Validator $validator): ValidationException
