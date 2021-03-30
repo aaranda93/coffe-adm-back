@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller as Controller;
 //rules
 
 use App\Rules\HasEitherRole;
+use App\Rules\BranchEmployes;
+use App\Rules\CompanyEmployes;
 
 class Store extends RequestAbstract
 {
@@ -35,7 +37,8 @@ class Store extends RequestAbstract
         return array_merge(
             $data,
             [
-                'requester_id' => Auth::user()->id
+                'requester_id' => Auth::user()->id,
+                "branch_id" => $this->route('user_id'),
             ]
         );
     }
@@ -55,6 +58,16 @@ class Store extends RequestAbstract
                         Role::OWNER,
                     ]
             )],
+            'branch_id' => [
+                'uuid',
+                'exists:App\Models\Branch,id',
+                (Auth::user()->hasEitherRole([
+                    Role::SUPERADMIN
+                ])) 
+                ?   null
+                :   new BranchEmployes(Auth::user()->branch)
+
+            ],
             'email' => 'required|email|max:60',
             'phone' => 'required|max:60',
             'birthday' => 'required|date',

@@ -35,9 +35,12 @@ class UserController extends Controller
         return $this->response(Api::OK, $user);
     }
 
-    public function store(StoreUser $request)
+    public function store(StoreUser $request, $branch_id)
     {
+        $branch = Branch::find($branch_id);
         $newUser = User::create($request->all());
+
+        $branch->contract($newUser);
 
         return $this->response(Api::CREATED, $newUser);
     }

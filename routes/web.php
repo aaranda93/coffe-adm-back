@@ -40,8 +40,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     
 
     //user routes
+
+    $router->post('branches/{branch_id}/users', ['uses' => 'V1\UserController@create'] );
     $router->get('users/{user_id}', ['uses' => 'V1\UserController@show'] );
-    $router->post('users', ['uses' => 'V1\UserController@create'] );
     $router->get('users', ['uses' => 'V1\UserController@index'] );
     $router->put('users/{user_id}', ['uses' => 'V1\UserController@update'] );
 
