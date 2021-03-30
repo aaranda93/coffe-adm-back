@@ -54,6 +54,7 @@ class Update extends RequestAbstract
                     ]
             )],
             'user_id' => [
+                'exists:App\Models\User',
                 (Auth::user()->hasEitherRole([
                     Role::SUPERADMIN
                 ])) 
@@ -81,12 +82,7 @@ class Update extends RequestAbstract
     {
         return[
                         
-            'nid.cl_rut' => 'El rut debe ser válido',
-            'nid.unique' => 'El rut ya está registrado',
-            'birthday.date' => 'La fecha de nacimiento debe ser una fecha valida',
-            'password.min' => 'La contraseña debe contener por lo menos 8 caracteres',
-            'email.max' => 'El campo tiene un largo máximo de 60 caracteres',
-            'email'      => 'El correo debe ser un correo válido',
+            'user_id.exists' => 'El usuario ingresado no existe',
         ];
     }
     public function failedValidation(Validator $validator): ValidationException

@@ -59,9 +59,11 @@ class Index extends RequestAbstract
                         Role::SUPERADMIN,
                         Role::OWNER,
                     ]
-            )],
+                )
+            ],
 
             'branch_id' => [
+                'exists:App\Models\Branch',
                 Rule::requiredIf(
                     Auth::user()->hasEitherRole([
                         Role::ADMIN
@@ -70,12 +72,12 @@ class Index extends RequestAbstract
                 (Auth::user()->hasEitherRole([
                     Role::SUPERADMIN
                 ])) 
-                ?   null
-                :   new BranchEmployes(Auth::user()->id),
-
+                    ?   null
+                    :   new BranchEmployes(Auth::user()->id),
 
             ],
             'company_id' => [
+                'exists:App\Models\Company',
                 Rule::requiredIf(
                     Auth::user()->hasEitherRole([
                         Role::OWNER
@@ -100,7 +102,8 @@ class Index extends RequestAbstract
     public function messages(): array
     {
         return[
-            
+            'branch_id.exists' => 'La sucursal ingresada no existe',
+            'company_id.exists' => 'La compañia ingresada no existe',
         ];
     }
     public function failedValidation(Validator $validator): ValidationException
