@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
+use App\Http\Requests\Companies\Index as IndexCompany;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
-use App\Modelsl\Company;
+use App\Models\Company;
 
 class CompanyController extends Controller
 {
@@ -14,10 +15,9 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function index(Request $request)
+    public function index(IndexCompany $request)
     {
-        $companies = Company::filter($request->all())
-        ->get();
+        $companies = Company::get();
 
         return $this->response(Api::OK, $companies);
     }

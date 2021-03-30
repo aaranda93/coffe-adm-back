@@ -50,9 +50,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     //companies routes
 
-    $router->post('companies', ['uses' => 'V1\ContractController@create'] );
-    $router->get('companies', ['uses' => 'V1\ContractController@index'] );
-    $router->put('companies/{company_id}', ['uses' => 'V1\ContractController@update'] );
+    $router->post('companies', ['uses' => 'V1\CompanyController@create'] );
+    $router->get('companies', ['uses' => 'V1\CompanyController@index'] );
+    $router->get('companies/{company_id}', ['uses' => 'V1\CompanyController@show'] );
+    $router->put('companies/{company_id}', ['uses' => 'V1\CompanyController@update'] );
 
 
 
