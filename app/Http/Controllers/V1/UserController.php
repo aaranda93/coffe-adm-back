@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 use App\Http\Requests\Users\Store as StoreUser;
 use App\Http\Requests\Users\Update as UpdateUser;
 use App\Http\Requests\Users\Index as IndexUser;
+use App\Http\Requests\Users\Show as ShowUser;
 use Illuminate\Http\Request;
 use App\Http\Constants\ApiResponse as Api;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,7 @@ class UserController extends Controller
         return $this->response(Api::OK, $users);
     }
 
-    public function show($user_id)
+    public function show(ShowUser $request ,$user_id)
     {
         $user = User::find($user_id)
         ->first();

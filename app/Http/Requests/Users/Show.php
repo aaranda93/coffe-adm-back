@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller as Controller;
 use App\Rules\BelongsToBranch;
 use App\Rules\IsSameUser;
 
-class Update extends RequestAbstract
+class Show extends RequestAbstract
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -46,14 +46,7 @@ class Update extends RequestAbstract
     public function rules(): array
     {
         return [
-            'requester_id' => [
-                new HasEitherRole(
-                    [
-                        Role::ADMIN,
-                        Role::SUPERADMIN,
-                        Role::OWNER,
-                    ]
-            )],
+
             'user_id' => [
                 'exists:App\Models\User',
                 (Auth::user()->hasEitherRole([
@@ -71,11 +64,6 @@ class Update extends RequestAbstract
                         :   new IsSameUser(Auth::user()->id)
   
              ],
-            'email' => 'email|max:60',
-            'phone' => 'max:60',
-            'birthday' => 'date',
-            'nid' => 'unique:users|cl_rut',
-            'password' => 'min:8'
         ];
     }
 
@@ -88,7 +76,6 @@ class Update extends RequestAbstract
     {
         return[
                         
-            'user_id.exists' => 'El usuario ingresado no existe',
         ];
     }
     public function failedValidation(Validator $validator): ValidationException
