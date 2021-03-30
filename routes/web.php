@@ -47,6 +47,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('users/{user_id}', ['uses' => 'V1\UserController@update'] );
 
 
+
     //branches routes
 
     $router->post('companies/{company_id}/branches', ['uses' => 'V1\BranchController@create'] );
@@ -55,12 +56,22 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('branches/{branch_id}', ['uses' => 'V1\BranchController@update'] );
 
 
+
     //companies routes
 
     $router->post('companies', ['uses' => 'V1\CompanyController@create'] );
     $router->get('companies', ['uses' => 'V1\CompanyController@index'] );
     $router->get('companies/{company_id}', ['uses' => 'V1\CompanyController@show'] );
     $router->put('companies/{company_id}', ['uses' => 'V1\CompanyController@update'] );
+
+
+
+    //products routes
+
+    $router->post('companies/{company_id}/products', ['uses' => 'V1\ProductController@create'] );
+    $router->get('products/{branch_id}', ['uses' => 'V1\ProductController@show'] );
+    $router->get('products', ['uses' => 'V1\ProductController@index'] );
+    $router->put('products/{branch_id}', ['uses' => 'V1\ProductController@update'] );
 
 
 
