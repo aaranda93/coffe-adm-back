@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Users;
+namespace App\Http\Requests\Company;
 
 use Pearl\RequestValidate\RequestAbstract;
 use App\Http\Constants\ApiResponse as Api;
@@ -14,8 +14,6 @@ use App\Http\Controllers\Controller as Controller;
 //rules
 
 use App\Rules\HasEitherRole;
-use App\Rules\BranchEmployes;
-use App\Rules\CompanyEmployes;
 
 class Store extends RequestAbstract
 {
@@ -38,7 +36,6 @@ class Store extends RequestAbstract
             $data,
             [
                 'requester_id' => Auth::user()->id,
-                "branch_id" => $this->route('branch_id'),
             ]
         );
     }
@@ -53,28 +50,14 @@ class Store extends RequestAbstract
             'requester_id' => [
                 new HasEitherRole(
                     [
-                        Role::ADMIN,
                         Role::SUPERADMIN,
-                        Role::OWNER,
                     ]
             )],
-            'branch_id' => [
-                'uuid',
-                'exists:App\Models\Branch,id',
-                (Auth::user()->hasEitherRole([
-                    Role::SUPERADMIN
-                ])) 
-                ?   null
-                :   new BranchEmployes(Auth::user()->branch)
-
-            ],
             'email' => 'required|email|max:60',
             'phone' => 'required|max:60',
-            'birthday' => 'required|date',
-            'nid' => 'required|unique:users|cl_rut',
-            'forenames' => 'required',
-            'surnames' => 'required',
-            'password' => 'required|min:8'
+            'nid' => 'required|unique:companies|cl_rut',
+            'name' => 'required',
+            'status' => 'integer|between:0,1'
 
         ];
     }
@@ -88,11 +71,11 @@ class Store extends RequestAbstract
     {
         return[
                         
+            'status.between' => 'Status invalido',
+            'status.integer' => 'Status invalido',
             'nid.cl_rut' => 'El rut debe ser válido',
             'nid.unique' => 'El rut ya está registrado',
             'required' => 'El campo es requerido',
-            'birthday.date' => 'La fecha de nacimiento debe ser una fecha valida',
-            'password.min' => 'La contraseña debe contener por lo menos 8 caracteres',
             'email.max' => 'El campo tiene un largo máximo de 60 caracteres',
             'email'      => 'El correo debe ser un correo válido',
         ];
