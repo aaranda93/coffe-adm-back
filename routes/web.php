@@ -47,6 +47,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('users/{user_id}', ['uses' => 'V1\UserController@update'] );
 
 
+    //branches routes
+
+    $router->post('companies/{company_id}/branches', ['uses' => 'V1\BranchController@create'] );
+    $router->get('branches/{branch_id}', ['uses' => 'V1\BranchController@show'] );
+    $router->get('branches', ['uses' => 'V1\BranchController@index'] );
+    $router->put('branches/{branch_id}', ['uses' => 'V1\BranchController@update'] );
+
 
     //companies routes
 
